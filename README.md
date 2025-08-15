@@ -34,7 +34,7 @@ sqldrift path/to/migrations.sql --config=custom.cnf
 
 2. **SQL Parsing**: It parses your SQL file and splits it into individual statements.
 
-3. **History Tracking**: For each SQL file, it maintains a history file at `~/.sqldrift/[filename]-history.json` to track which statements have been executed.
+3. **History Tracking**: For each SQL file and environment, it maintains a history file at `~/.sqldrift/[environment]-[filename]-history.json` to track which statements have been executed per environment.
 
 4. **New Statement Detection**: Only new statements (not previously executed) are identified for execution.
 
@@ -68,9 +68,10 @@ sqldrift migrations.sql --config=production.cnf
 ## Features
 
 - ✅ **Incremental Execution**: Only runs new SQL statements
-- ✅ **History Tracking**: Maintains execution history per SQL file
+- ✅ **Environment-Scoped History**: Maintains separate execution history per SQL file and environment
 - ✅ **Transaction Safety**: Rollback on failure
 - ✅ **User Confirmation**: Prompts before execution
+- ✅ **Multi-Environment Support**: Support for multiple database environments (development, staging, production)
 - ✅ **Custom Configuration**: Support for multiple database configurations
 - ✅ **Relative/Absolute Paths**: Works with both relative and absolute file paths
 
@@ -122,7 +123,7 @@ Executing: CREATE TABLE posts (
     title VARCHAR(200)...
 
 Successfully executed 3 statement(s)
-History updated: /Users/username/.sqldrift/migrations.sql-history.json
+History updated: /Users/username/.sqldrift/default-migrations.sql-history.json
 ```
 
 Second run (after adding new statements to the file):
@@ -131,26 +132,61 @@ $ sqldrift migrations.sql
 
 No new SQL statements to execute.
 ```
-## Environments
+## Environment Support
 
- Use default environment
-`npx sqldrift path/to/migrations.sql`
+SQLDrift supports multiple environments with separate history tracking for each environment. This ensures that SQL statements executed in one environment don't affect the tracking in another environment.
 
- Use production environment
-`npx sqldrift path/to/migrations.sql --environment=production`
+### Environment-Scoped History
 
- Use custom config with staging environment
-`npx sqldrift path/to/migrations.sql --config=custom.cnf --environment=staging`
+Each environment maintains its own execution history:
+- **Development**: `~/.sqldrift/development-migrations.sql-history.json`
+- **Staging**: `~/.sqldrift/staging-migrations.sql-history.json`
+- **Production**: `~/.sqldrift/production-migrations.sql-history.json`
 
-# environment configuration
+This means you can run the same SQL file against different environments, and each will track its own execution state independently.
 
+### Usage Examples
+
+Use default environment:
+```bash
+npx sqldrift path/to/migrations.sql
 ```
+
+Use production environment:
+```bash
+npx sqldrift path/to/migrations.sql --environment=production
+```
+
+Use custom config with staging environment:
+```bash
+npx sqldrift path/to/migrations.sql --config=custom.cnf --environment=staging
+```
+
+### Environment Configuration
+
+The default configuration file includes multiple environment sections:
+
+```ini
 [default]
 user = "root"
 password = "root"
 host = "127.0.0.1"
 port = "3306"
 db = "sqldrift"
+
+[development]
+user = "root"
+password = "root"
+host = "127.0.0.1"
+port = "3306"
+db = "sqldrift_dev"
+
+[staging]
+user = "root"
+password = "root"
+host = "127.0.0.1"
+port = "3306"
+db = "sqldrift_stage"
 
 [production]
 user = "root"
@@ -159,6 +195,13 @@ host = "127.0.0.1"
 port = "3306"
 db = "sqldrift_prod"
 ```
+
+### Environment Benefits
+
+- **Isolated Tracking**: Each environment tracks its own execution history
+- **Safe Deployments**: Run the same migration file across environments without conflicts
+- **Environment-Specific Databases**: Connect to different databases per environment
+- **Independent State**: Development changes don't affect production tracking
 
 ## Requirements
 
