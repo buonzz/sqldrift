@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+const SqlDriftCommand = require('../lib/index')
+
+SqlDriftCommand.run().catch(require('@oclif/core/handle'))
