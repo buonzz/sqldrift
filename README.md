@@ -131,6 +131,34 @@ $ sqldrift migrations.sql
 
 No new SQL statements to execute.
 ```
+## Environments
+
+ Use default environment
+`npx sqldrift path/to/migrations.sql`
+
+ Use production environment
+`npx sqldrift path/to/migrations.sql --environment=production`
+
+ Use custom config with staging environment
+`npx sqldrift path/to/migrations.sql --config=custom.cnf --environment=staging`
+
+# environment configuration
+
+```
+[default]
+user = "root"
+password = "root"
+host = "127.0.0.1"
+port = "3306"
+db = "sqldrift"
+
+[production]
+user = "root"
+password = "root"
+host = "127.0.0.1"
+port = "3306"
+db = "sqldrift_prod"
+```
 
 ## Requirements
 
