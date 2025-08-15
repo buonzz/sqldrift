@@ -34,6 +34,12 @@ sqldrift path/to/migrations.sql --config=custom.cnf
 sqldrift path/to/migrations.sql --record-history --environment=development
 ```
 
+### Clear History
+
+```bash
+sqldrift path/to/migrations.sql --clear-history --environment=development
+```
+
 ## How It Works
 
 1. **First Run**: SQLDrift creates a default configuration file at `~/.sqldrift/default.conf` with default MySQL connection settings.
@@ -81,6 +87,7 @@ sqldrift migrations.sql --config=production.cnf
 - ✅ **Custom Configuration**: Support for multiple database configurations
 - ✅ **Relative/Absolute Paths**: Works with both relative and absolute file paths
 - ✅ **Record History Only**: Update history file without executing SQL statements using `--record-history`
+- ✅ **Clear History**: Delete history file to reset tracking using `--clear-history`
 
 ## Example
 
@@ -174,6 +181,11 @@ Use record-history mode to update history without executing:
 npx sqldrift path/to/migrations.sql --record-history --environment=development
 ```
 
+Use clear-history mode to reset tracking:
+```bash
+npx sqldrift path/to/migrations.sql --clear-history --environment=development
+```
+
 ### Environment Configuration
 
 The default configuration file includes multiple environment sections:
@@ -252,6 +264,49 @@ Recording 3 new SQL statement(s) to history without executing...
 Successfully recorded 3 statement(s) to history
 History updated: /Users/username/.sqldrift/development-migrations.sql-history.json
 Note: SQL statements were NOT executed against the database.
+```
+
+## Clear History Mode
+
+The `--clear-history` flag allows you to delete the history file for a specific environment and SQL file. This is useful when:
+
+- You want to reset the tracking and start fresh
+- You need to re-run all migrations from the beginning
+- You want to clean up old history files
+
+### Usage
+
+```bash
+sqldrift path/to/migrations.sql --clear-history --environment=development
+```
+
+### Behavior
+
+When using `--clear-history`:
+
+1. **No Database Connection**: The tool will not connect to or execute anything against the database
+2. **History File Deletion**: The specific history file for the environment and SQL file is deleted
+3. **Environment Scoped**: Only the history for the specified environment is cleared
+4. **Safe Operation**: If the history file doesn't exist, a friendly message is shown
+
+### Example
+
+```bash
+$ sqldrift migrations.sql --clear-history --environment=development
+
+Successfully deleted history file for environment 'development' and file 'migrations.sql'
+Deleted: /Users/username/.sqldrift/development-migrations.sql-history.json
+Note: No SQL statements were executed against the database.
+```
+
+If the history file doesn't exist:
+
+```bash
+$ sqldrift migrations.sql --clear-history --environment=development
+
+No history file found for environment 'development' and file 'migrations.sql'
+Expected location: /Users/username/.sqldrift/development-migrations.sql-history.json
+Note: No SQL statements were executed against the database.
 ```
 
 ## Requirements
