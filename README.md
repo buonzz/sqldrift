@@ -28,6 +28,12 @@ sqldrift path/to/migrations.sql
 sqldrift path/to/migrations.sql --config=custom.cnf
 ```
 
+### Record History Only
+
+```bash
+sqldrift path/to/migrations.sql --record-history --environment=development
+```
+
 ## How It Works
 
 1. **First Run**: SQLDrift creates a default configuration file at `~/.sqldrift/default.conf` with default MySQL connection settings.
@@ -74,6 +80,7 @@ sqldrift migrations.sql --config=production.cnf
 - ✅ **Multi-Environment Support**: Support for multiple database environments (development, staging, production)
 - ✅ **Custom Configuration**: Support for multiple database configurations
 - ✅ **Relative/Absolute Paths**: Works with both relative and absolute file paths
+- ✅ **Record History Only**: Update history file without executing SQL statements using `--record-history`
 
 ## Example
 
@@ -162,6 +169,11 @@ Use custom config with staging environment:
 npx sqldrift path/to/migrations.sql --config=custom.cnf --environment=staging
 ```
 
+Use record-history mode to update history without executing:
+```bash
+npx sqldrift path/to/migrations.sql --record-history --environment=development
+```
+
 ### Environment Configuration
 
 The default configuration file includes multiple environment sections:
@@ -202,6 +214,45 @@ db = "sqldrift_prod"
 - **Safe Deployments**: Run the same migration file across environments without conflicts
 - **Environment-Specific Databases**: Connect to different databases per environment
 - **Independent State**: Development changes don't affect production tracking
+
+## Record History Mode
+
+The `--record-history` flag allows you to update the history file without actually executing SQL statements against the database. This is useful when:
+
+- SQL statements have already been executed manually against the database
+- You want to mark statements as "executed" in your tracking without running them again
+- You need to synchronize your history file with the actual database state
+
+### Usage
+
+```bash
+sqldrift path/to/migrations.sql --record-history --environment=development
+```
+
+### Behavior
+
+When using `--record-history`:
+
+1. **No Database Connection**: The tool will not connect to or execute anything against the database
+2. **History Update Only**: New SQL statements are added to the history file with a `recordedOnly: true` flag
+3. **Incremental Detection**: Only new statements (not already in history) are recorded
+4. **Environment Scoped**: History is updated for the specified environment only
+
+### Example
+
+```bash
+$ sqldrift migrations.sql --record-history --environment=development
+
+Recording 3 new SQL statement(s) to history without executing...
+
+1. CREATE TABLE users ( id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCH...
+2. INSERT INTO users (name, email) VALUES ('John Doe', 'john@example.com')
+3. CREATE TABLE posts ( id INT AUTO_INCREMENT PRIMARY KEY, user_id INT, title VARCHAR(200) NOT NUL...
+
+Successfully recorded 3 statement(s) to history
+History updated: /Users/username/.sqldrift/development-migrations.sql-history.json
+Note: SQL statements were NOT executed against the database.
+```
 
 ## Requirements
 
