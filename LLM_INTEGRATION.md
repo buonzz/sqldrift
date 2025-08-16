@@ -34,7 +34,7 @@ Add the following section to your `~/.sqldrift/default.conf` file:
 ```ini
 [openrouter]
 api_key = "your_openrouter_api_key_here"
-model = "deepseek/deepseek-r1:free"
+model = "anthropic/claude-3.5-sonnet"
 ```
 
 ### 3. Available Models
