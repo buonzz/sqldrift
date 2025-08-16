@@ -2,14 +2,14 @@
   "name": "sqldrift",
   "version": "1.0.0",
   "description": "A CLI tool for running SQL migrations against MySQL databases with tracking",
-  "author": "Your Name",
+  "author": "Darwin Biler",
   "bin": {
     "sqldrift": "./bin/run"
   },
-  "homepage": "https://github.com/yourusername/sqldrift",
+  "homepage": "https://github.com/buonzz/sqldrift",
   "license": "MIT",
   "main": "lib/index.js",
-  "repository": "yourusername/sqldrift",
+  "repository": "buonzz/sqldrift",
   "files": [
     "/bin",
     "/lib",
@@ -60,7 +60,7 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "bugs": "https://github.com/yourusername/sqldrift/issues",
+  "bugs": "https://github.com/buonzz/sqldrift/issues",
   "keywords": [
     "oclif",
     "sql",
