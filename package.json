@@ -44,9 +44,7 @@
   "oclif": {
     "bin": "sqldrift",
     "dirname": "sqldrift",
-    "plugins": [
-      "@oclif/plugin-help"
-    ]
+    "plugins": []
   },
   "scripts": {
     "build": "echo 'JavaScript project - no build needed'",
