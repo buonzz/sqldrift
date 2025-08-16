@@ -34,16 +34,28 @@ Add the following section to your `~/.sqldrift/default.conf` file:
 ```ini
 [openrouter]
 api_key = "your_openrouter_api_key_here"
-model = "anthropic/claude-3.5-sonnet"
+model = "deepseek/deepseek-r1:free"
 ```
 
 ### 3. Available Models
+The model value should be the model ID from the OpenRouter URL. For example:
+- URL: `https://openrouter.ai/anthropic/claude-3.5-sonnet` → Model: `anthropic/claude-3.5-sonnet`
+- URL: `https://openrouter.ai/deepseek/deepseek-r1:free` → Model: `deepseek/deepseek-r1:free`
+
 Popular models you can use:
-- `anthropic/claude-3.5-sonnet` (recommended)
-- `anthropic/claude-3-haiku`
-- `openai/gpt-4o`
-- `openai/gpt-4o-mini`
-- `meta-llama/llama-3.1-8b-instruct`
+- `deepseek/deepseek-r1:free` (free tier available - recommended for getting started)
+- `anthropic/claude-3.5-sonnet` (excellent for accuracy, paid)
+- `anthropic/claude-3-haiku` (faster, lower cost)
+- `openai/gpt-4o` (high quality, paid)
+- `openai/gpt-4o-mini` (balanced cost/performance)
+- `meta-llama/llama-3.1-8b-instruct` (open source)
+- `google/gemini-pro` (Google's model)
+
+**How to find model IDs:**
+1. Visit [OpenRouter Models](https://openrouter.ai/models)
+2. Click on any model you're interested in
+3. The model ID is the part after `openrouter.ai/` in the URL
+4. Use that exact string as your model configuration value
 
 ## Usage
 
@@ -60,14 +72,19 @@ sqldrift path/to/migrations.sql
 
 ### Example Output
 ```
-[12:34:56] LLM service initialized with OpenRouter
-[12:34:57] Using LLM to parse SQL file...
-[12:34:58] Found 8 new SQL statement(s) to execute against database: mydb
-[12:34:59] [1/8] Validating: CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY...
-[12:35:00] [1/8] Executing: CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY...
-[12:35:01] [2/8] Validating: CREATE TABLE posts (id INT AUTO_INCREMENT PRIMARY KEY...
-[12:35:02] [2/8] Recommendations: Consider adding an index on created_at for better performance
-[12:35:03] [2/8] Executing: CREATE TABLE posts (id INT AUTO_INCREMENT PRIMARY KEY...
+[12:34:56] 🚀 Initializing LLM service with OpenRouter...
+[12:34:57] 🔗 Testing LLM connection...
+[12:34:58] ⏳ Processing with LLM...
+[12:34:59] ✅ LLM processing completed
+[12:35:00] ✅ LLM service ready
+[12:35:01] 📡 Sending SQL file to LLM for intelligent parsing...
+[12:35:02] ⏳ Processing with LLM...
+[12:35:03] ✅ LLM processing completed
+[12:35:04] Found 8 new SQL statement(s) to execute against database: mydb
+[12:35:05] [1/8] 🔍 Validating SQL statement with LLM...
+[12:35:06] ⏳ Processing with LLM...
+[12:35:07] ✅ LLM processing completed
+[12:35:08] [1/8] Executing: CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY...
 ```
 
 ### Error Example
@@ -106,9 +123,11 @@ Error: Execution halted due to SQL validation failure. Please fix the issues and
 - **Execution Planning**: Helps optimize statement execution order
 
 ### 🛠️ Developer Experience
+- **Progress Indicators**: Real-time feedback during LLM processing with animated progress dots
 - **Detailed Feedback**: Clear error messages with specific recommendations
 - **Educational Value**: Learn SQL best practices through LLM suggestions
 - **Confidence**: Execute migrations with greater confidence in their correctness
+- **Visual Feedback**: Emojis and clear status messages for better user experience
 
 ## Troubleshooting
 
