@@ -26,7 +26,7 @@ Or run directly with npx:
 npx sqldrift path/to/your/migrations.sql
 ```
 
-It also needs Ollama installed locally, to check the sql statements in the SQL file.
+It also needs Ollama installed locally to understand the sql statements in the SQL file.
 Go to https://ollama.com/download and pull the model:
 
 ```
@@ -66,7 +66,7 @@ sqldrift path/to/migrations.sql --clear-history --environment=development
 
 1. **First Run**: SQLDrift creates a default configuration file at `~/.sqldrift/default.conf` with default MySQL connection settings.
 
-2. **SQL Parsing**: It parses your SQL file and splits it into individual statements.
+2. **SQL Parsing**: It parses your SQL file and splits it into individual statements. It uses LLM to do this.
 
 3. **History Tracking**: For each SQL file and environment, it maintains a history file at `~/.sqldrift/[environment]-[filename]-history.json` to track which statements have been executed per environment.
 
