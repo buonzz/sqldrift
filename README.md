@@ -1,6 +1,18 @@
 # SQLDrift
 
-A CLI tool for running SQL migrations against MySQL databases with tracking.
+A CLI tool for running and tracking SQL statements against MySQL databases.
+
+## Features
+- ✅ **AI-Powered SQL analysis**: It reviews the sql statements for correctness.
+- ✅ **Incremental Execution**: Only runs new SQL statements
+- ✅ **Environment-Scoped History**: Maintains separate execution history per SQL file and environment
+- ✅ **Transaction Safety**: Rollback on failure
+- ✅ **User Confirmation**: Prompts before execution
+- ✅ **Multi-Environment Support**: Support for multiple database environments (development, staging, production)
+- ✅ **Custom Configuration**: Support for multiple database configurations
+- ✅ **Relative/Absolute Paths**: Works with both relative and absolute file paths
+- ✅ **Record History Only**: Update history file without executing SQL statements using `--record-history`
+- ✅ **Clear History**: Delete history file to reset tracking using `--clear-history`
 
 ## Installation
 
@@ -18,7 +30,7 @@ It also needs Ollama installed locally, to check the sql statements in the SQL f
 Go to https://ollama.com/download and pull the model:
 
 ```
-ollama pull codellama
+ollama pull llama3.2:1b
 ```
 
 then start Ollama app.
@@ -87,17 +99,7 @@ You can create your own configuration file and use it with the `--config` option
 sqldrift migrations.sql --config=production.cnf
 ```
 
-## Features
 
-- ✅ **Incremental Execution**: Only runs new SQL statements
-- ✅ **Environment-Scoped History**: Maintains separate execution history per SQL file and environment
-- ✅ **Transaction Safety**: Rollback on failure
-- ✅ **User Confirmation**: Prompts before execution
-- ✅ **Multi-Environment Support**: Support for multiple database environments (development, staging, production)
-- ✅ **Custom Configuration**: Support for multiple database configurations
-- ✅ **Relative/Absolute Paths**: Works with both relative and absolute file paths
-- ✅ **Record History Only**: Update history file without executing SQL statements using `--record-history`
-- ✅ **Clear History**: Delete history file to reset tracking using `--clear-history`
 
 ## Example
 
