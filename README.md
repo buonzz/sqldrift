@@ -3,7 +3,7 @@
 A CLI tool for running and tracking SQL statements against MySQL databases.
 
 ## Features
-- ✅ **AI-Powered SQL analysis**: It reviews the sql statements for correctness.
+- ✅ **SQL Parsing & Validation**: Uses node-sql-parser for accurate SQL statement parsing and validation
 - ✅ **Incremental Execution**: Only runs new SQL statements
 - ✅ **Environment-Scoped History**: Maintains separate execution history per SQL file and environment
 - ✅ **Transaction Safety**: Rollback on failure
@@ -26,14 +26,6 @@ Or run directly with npx:
 npx sqldrift path/to/your/migrations.sql
 ```
 
-It also needs Ollama installed locally to understand the sql statements in the SQL file.
-Go to https://ollama.com/download and pull the model:
-
-```
-ollama pull llama3.2:1b
-```
-
-then start Ollama app.
 
 
 ## Usage
@@ -66,7 +58,7 @@ sqldrift path/to/migrations.sql --clear-history --environment=development
 
 1. **First Run**: SQLDrift creates a default configuration file at `~/.sqldrift/default.conf` with default MySQL connection settings.
 
-2. **SQL Parsing**: It parses your SQL file and splits it into individual statements. It uses LLM to do this.
+2. **SQL Parsing**: It parses your SQL file and splits it into individual statements using the node-sql-parser library.
 
 3. **History Tracking**: For each SQL file and environment, it maintains a history file at `~/.sqldrift/[environment]-[filename]-history.json` to track which statements have been executed per environment.
 
