@@ -14,6 +14,16 @@ Or run directly with npx:
 npx sqldrift path/to/your/migrations.sql
 ```
 
+It also needs Ollama installed locally, to check the sql statements in the SQL file.
+Go to https://ollama.com/download and pull the model:
+
+```
+ollama pull codellama
+```
+
+then start Ollama app.
+
+
 ## Usage
 
 ### Basic Usage
