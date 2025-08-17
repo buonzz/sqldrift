@@ -1,6 +1,6 @@
 {
   "name": "sqldrift",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A CLI tool for running SQL migrations against MySQL databases with tracking and validation using node-sql-parser",
   "author": "Darwin Biler",
   "bin": {
