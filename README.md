@@ -1,6 +1,6 @@
 # SQLDrift
 
-A CLI tool for running and tracking SQL statements against MySQL databases.
+SqlDrift is a CLI tool that executes and tracks SQL migrations across MySQL environments. It ensures safety through statement validation, transactional execution, and user confirmation while maintaining environment-specific history files for executed statements.
 
 ## Features
 - ✅ **SQL Parsing & Validation**: Uses node-sql-parser for accurate SQL statement parsing and validation
